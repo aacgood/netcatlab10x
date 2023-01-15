@@ -22,8 +22,6 @@ spec:
       port: 2222
     - protocol: TCP
       port: 5000
-    - protocol: TCP
-      port: 5001
   egress:
   - to:
     - podSelector:
@@ -34,8 +32,6 @@ spec:
       port: 2222
     - protocol: TCP
       port: 5000
-    - protocol: TCP
-      port: 5001
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
