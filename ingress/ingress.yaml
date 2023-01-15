@@ -1,0 +1,109 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: terminal-ingress
+  labels: 
+    app: ingress
+  namespace: netcatlab
+spec:
+  rules:
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: terminal
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage0
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage1
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage2
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage3
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage4
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage5
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage6
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage7
+            port:
+              number: 8080
+  - host: var.ingress_host.agood.cloud
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: stage8
+            port:
+              number: 8080

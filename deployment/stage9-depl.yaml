@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stage9
+  namespace: netcatlab
+  labels:
+    app: stage9
+spec:
+  selector:
+    matchLabels:
+      app: stage9
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: stage9
+    spec:
+      containers:
+        - name: stage9
+          image: webterminal
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CURRENT_STAGE
+              value: stage9
+            - name: UNLOCK
+              valueFrom:
+                secretKeyRef:
+                  name: netcatlab-secrets
+                  key: stage8Unlock
+            - name: FLAGTXT
+              valueFrom:
+                secretKeyRef:
+                  name: netcatlab-secrets
+                  key: stage9curl
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stage9
+  namespace: netcatlab
+spec:
+  type: LoadBalancer
+  selector:
+    app: stage9
+  ports:
+  - name: flask
+    protocol: TCP
+    port: 5000
+    targetPort: 5000

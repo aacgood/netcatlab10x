@@ -1,0 +1,19 @@
+cat << EOF
+Welcome to the NETCAT 10X Lab.  
+
+- Each host is numbered stage[0..9] 
+- Use "cat flag.txt", and follow the decoded message to progress
+- The same process is required to unlock the webterminal for each stage
+- On each stage, create a named pipe and enter in the correct netcat relay command to pivot all the way from 'terminal' to 'stage9'
+- Hosts must be accessed in order.  Firewall rules enforce this.
+- The objective is to find the flag on stage9:5000
+- Whilst the flag can be collected from stage8, this is not in the spirit of this lab.  Try to obtain it from terminal.
+
+Happy curling and netcatting!
+
+You are currently at $(hostname | cut -d- -f1)
+
+
+EOF
+
+export PS1="\[\033[32m\]$(hostname | cut -d- -f1)> \[\033[1;37m\]"

@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stage8
+  namespace: netcatlab
+  labels:
+    app: stage8
+spec:
+  selector:
+    matchLabels:
+      app: stage8
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: stage8
+    spec:
+      containers:
+        - name: stage8
+          image: webterminal
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CURRENT_STAGE
+              value: stage8
+            - name: UNLOCK
+              valueFrom:
+                secretKeyRef:
+                  name: netcatlab-secrets
+                  key: stage7Unlock
+            - name: GOTTY_CREDENTIAL
+              valueFrom:
+                secretKeyRef:
+                  name: netcatlab-secrets
+                  key: stage8gotty
+            - name: FLAGTXT
+              valueFrom:
+                secretKeyRef:
+                  name: netcatlab-secrets
+                  key: stage8curl
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stage8
+  namespace: netcatlab
+spec:
+  type: LoadBalancer
+  selector:
+    app: stage8
+  ports:
+  - name: webterminal
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+  - name: flask
+    protocol: TCP
+    port: 5000
+    targetPort: 5000
+  - name: netcat
+    protocol: TCP
+    port: 2222
+    targetPort: 2222

@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: stage9-allow-to-stage8
+  namespace: netcatlab
+  annotations:
+    note: "stage9 <-> stage8"
+spec:
+  podSelector:
+    matchLabels:
+      app: stage9
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: stage8
+    ports:
+    - protocol: TCP
+      port: 5000
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: stage8
+    ports:
+    - protocol: TCP
+      port: 5000

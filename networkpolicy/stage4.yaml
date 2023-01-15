@@ -1,0 +1,69 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: stage4-allow-to-stage3
+  namespace: netcatlab
+  annotations:
+    note: "stage4 <-> stage3"
+spec:
+  podSelector:
+    matchLabels:
+      app: stage4
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: stage3
+    ports:
+    - protocol: TCP
+      port: 2222
+    - protocol: TCP
+      port: 5000
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: stage3
+    ports:
+    - protocol: TCP
+      port: 2222
+    - protocol: TCP
+      port: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: stage4-allow-to-stage5
+  namespace: netcatlab
+  annotations:
+    note: "stage4 <-> stage5"
+spec:
+  podSelector:
+    matchLabels:
+      app: stage4
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: stage5
+    ports:
+    - protocol: TCP
+      port: 2222
+    - protocol: TCP
+      port: 5000
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: stage5
+    ports:
+    - protocol: TCP
+      port: 2222
+    - protocol: TCP
+      port: 5000
